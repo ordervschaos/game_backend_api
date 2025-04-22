@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   # 
   namespace :api do
-    resource :user, only: [:create]
+    resource :user, only: [:create, :show]
     resource :sessions, only: [:create]
   end
   

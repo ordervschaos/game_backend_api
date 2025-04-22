@@ -1,5 +1,9 @@
 class Api::UsersController < ApplicationController
   skip_before_action :authenticate!, only: :create
+
+  def show
+    render json: @current_user.as_json(only: [:email,:id])
+  end
   def create
     user = User.new(format_user)
 
