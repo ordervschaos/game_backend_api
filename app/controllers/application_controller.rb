@@ -8,8 +8,7 @@ class ApplicationController < ActionController::API
     return head :unauthorized unless token
 
     begin
-      payload = JWT.decode(token, Rails.application.credentials.secret_key_base, true, algorithm: 'HS256').first
-      @current_user = User.find_by(id: payload['user_id'])
+      @current_user = User.from_jwt(token)
       return head :forbidden unless @current_user
     rescue JWT::ExpiredSignature, JWT::DecodeError
       return head :unauthorized
