@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authenticate!
+  rescue_from StandardError, with: :handle_error
 
   private
 
@@ -15,5 +16,21 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def handle_error(error)
+    Rails.logger.error("\n=== Error Details ===")
+    Rails.logger.error("Error Class: #{error.class}")
+    Rails.logger.error("Message: #{error.message}")
+    Rails.logger.error("Backtrace:\n#{error.backtrace.join("\n")}")
+    Rails.logger.error("===================\n")
+
+    if Rails.env.development? || Rails.env.test?
+      render json: { 
+        error: error.message,
+        backtrace: error.backtrace
+      }, status: :internal_server_error
+    else
+      render json: { error: "An unexpected error occurred" }, status: :internal_server_error
+    end
+  end
 end
 

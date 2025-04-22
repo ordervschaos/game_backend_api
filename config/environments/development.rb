@@ -68,4 +68,14 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Enable better_errors gem output
+  config.middleware.insert_after ActionDispatch::DebugExceptions, BetterErrors::Middleware
+
+  # Configure error logging
+  config.log_level = :debug
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.logger.formatter = proc do |severity, datetime, progname, msg|
+    "#{datetime.strftime('%Y-%m-%d %H:%M:%S.%L')} #{severity}: #{msg}\n"
+  end
 end
