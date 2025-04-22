@@ -4,6 +4,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: URI::MailTo::EMAIL_REGEXP
   validates :password, presence: true, length: {minimum: 6}
 
+  has_many :game_events
+
   def jwt
     JWT.encode({
       user_id: self.id,

@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_21_205653) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_22_182554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "game_name"
+    t.string "event_type"
+    t.datetime "occurred_at", precision: nil
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_game_events_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -21,4 +31,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_21_205653) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "game_events", "users"
 end
