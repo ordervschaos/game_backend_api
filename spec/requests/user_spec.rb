@@ -21,6 +21,34 @@ RSpec.describe "Users", type: :request do
         
       end
     end
+    
+    context "when email already exists" do
+      let(:existing_email) { "existing@example.com" }
+      let(:existing_password) { "Password123!" }
+      let(:duplicate_values) do
+        {
+          email: existing_email,
+          password: "NewPassword123!"
+        }
+      end
+      
+      before do
+        # Create a user with the email that will be used in the test
+        User.create!(
+          email: existing_email,
+          password: existing_password
+        )
+      end
+      
+      it "does not create a new user and returns unprocessable entity status" do
+        expect {
+          post("/api/user", params: duplicate_values)
+        }.not_to change(User, :count)
+        
+        expect(response).to have_http_status :unprocessable_entity
+        expect(JSON.parse(response.body)).to include("errors" => [{"detail" => "Email has already been taken"}])
+      end
+    end
   end
 
   describe "GET /show" do
