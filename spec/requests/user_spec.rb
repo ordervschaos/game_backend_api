@@ -22,6 +22,7 @@ RSpec.describe "Users", type: :request do
 
   describe "GET /show" do
     let(:user) { create(:user, id: 3) }
+    let(:user_without_subscription) { create(:user, id: 103) }
     context "when an authenticated user requests" do
       before do
         user.game_events.create!({
@@ -56,6 +57,23 @@ RSpec.describe "Users", type: :request do
         get "/api/user", headers: headers
 
         expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context "when an authenticated user without a subscription " do
+      before do
+        token = user_without_subscription.jwt
+        get "/api/user", headers: { "Authorization": "Bearer #{token}" }
+      end
+
+      it "should throw a server error" do
+        token = user_without_subscription.jwt
+        headers = {
+          "Authorization": "Bearer #{token}"
+        }
+        get "/api/user", headers: headers
+        expect(response).to have_http_status :server_error
+        
       end
     end
   end
