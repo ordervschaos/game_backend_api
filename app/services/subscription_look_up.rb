@@ -1,4 +1,4 @@
-# because this looks like something that'll come in handy
+# Note: because this looks like something that'll come in handy
 class SubscriptionLookUp
   include Retryable
 
@@ -20,7 +20,9 @@ class SubscriptionLookUp
       response = make_request @user_id
       
       if response.status == 404
-        raise SubscriptionError, "User not found"
+        Rails.logger.error("Subscription lookup for user #{@user_id} returned 404")
+        # Note: Not raising an error here because we don't want to block the user from accessing other details
+        return 'no_subscription'
       end
 
       parsed_response = JSON.parse(response.body)

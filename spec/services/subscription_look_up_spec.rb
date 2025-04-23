@@ -34,8 +34,9 @@ RSpec.describe SubscriptionLookUp do
     context 'with user ID 101 (not found)' do
       let(:service) { described_class.new(101) }
 
-      it 'raises a SubscriptionError for non-existent user' do
-        expect { service.call }.to raise_error(described_class::SubscriptionError)
+      it 'returns no_subscription for non-existent user' do
+        result = service.call
+        expect(result).to eq('no_subscription')
       end
     end
   end

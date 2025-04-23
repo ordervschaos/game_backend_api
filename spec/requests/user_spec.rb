@@ -69,13 +69,13 @@ RSpec.describe "Users", type: :request do
         get "/api/user", headers: { "Authorization": "Bearer #{token}" }
       end
 
-      it "should throw a server error" do
+      it "should return no_subscription status" do
         token = user_without_subscription.jwt
         headers = {
           "Authorization": "Bearer #{token}"
         }
         get "/api/user", headers: headers
-        expect(response).to have_http_status :server_error
+        expect(JSON.parse(response.body)['subscription_status']).to eq('no_subscription')
         
       end
     end

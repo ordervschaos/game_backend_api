@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     resource :user, only: [:create, :show] do
       resources :game_events, only: :create
     end
-    resource :sessions, only: [:create]
-    
+    resource :sessions, only: [:create]    
   end
 end
