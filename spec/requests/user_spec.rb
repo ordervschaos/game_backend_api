@@ -23,15 +23,26 @@ RSpec.describe "Users", type: :request do
   describe "GET /show" do
     let(:user) { create(:user) }
     context "when an authenticated user requests" do
+      before do
+        user.game_events.create!({
+          game_name:"ee",
+          event_type:"COMPLETED",
+          occurred_at: Time.now
+        })
+        token = user.jwt
+        get "/api/user", headers: { "Authorization": "Bearer #{token}" }
+      end
+
       it "sends user data" do
         token = user.jwt
         headers = {
           "Authorization": "Bearer #{token}"
         }
         get "/api/user", headers: headers
-
+        json_response = JSON.parse(response.body)
         expect(response).to have_http_status :ok
-        expect(JSON.parse(response.body)).to include("email" => user.email)
+        expect(json_response).to include("email" => user.email)
+        expect(json_response["stats"]["total_games_played"]).to eq(1)
       end
     end
 
