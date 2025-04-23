@@ -2,7 +2,8 @@ class User < ApplicationRecord
   has_secure_password
 
   validates :email, presence: true, uniqueness: true, format: URI::MailTo::EMAIL_REGEXP
-  validates :password, presence: true, length: {minimum: 6}
+  # Note: Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character
+  validates :password, presence: true, length: {minimum: 8}, format: {with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/, message: "must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character"}
 
   has_many :game_events
 

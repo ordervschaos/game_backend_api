@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "API Sessions Rate Limiting", type: :request do
-  let(:user) { create(:user, email: 'test@example.com', password: 'password123') }
-  let(:valid_params) { { email: user.email, password: 'password123' } }
+  let(:user) { create(:user, email: 'test@example.com', password: 'Password123!') }
+  let(:valid_params) { { email: user.email, password: 'Password123!' } }
   let(:invalid_params) { { email: user.email, password: 'wrong_password' } }
 
   before do

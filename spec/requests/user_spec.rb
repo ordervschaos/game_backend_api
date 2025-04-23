@@ -6,7 +6,7 @@ RSpec.describe "Users", type: :request do
       let(:valid_values) do
          {
           email: "tgest@test.com",
-          password: "pwinewr12"
+          password: "Password123!"
         }
       end
 
