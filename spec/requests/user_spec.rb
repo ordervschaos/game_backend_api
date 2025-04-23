@@ -21,7 +21,7 @@ RSpec.describe "Users", type: :request do
   end
 
   describe "GET /show" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, id: 3) }
     context "when an authenticated user requests" do
       before do
         user.game_events.create!({
@@ -43,6 +43,7 @@ RSpec.describe "Users", type: :request do
         expect(response).to have_http_status :ok
         expect(json_response).to include("email" => user.email)
         expect(json_response["stats"]["total_games_played"]).to eq(1)
+        expect(json_response["subscription_status"]).to eq("expired")
       end
     end
 

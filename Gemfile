@@ -56,3 +56,5 @@ gem "rspec-rails", "~> 7.1"
 gem "bcrypt", "~> 3.1"
 
 gem "jwt", "~> 2.10"
+
+gem "faraday", "~> 2.13"

@@ -4,6 +4,7 @@ class Api::UsersController < ApplicationController
   def show
     user = @current_user.as_json(only: [:email, :id])
     user[:stats] = { total_games_played: @current_user.game_events.count}
+    user[:subscription_status] = SubscriptionLookUp.call(@current_user[:id])
     render json: user, status: :ok
   end
   def create
