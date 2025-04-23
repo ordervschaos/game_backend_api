@@ -22,11 +22,11 @@ class ApplicationController < ActionController::API
   end
 
   def handle_error(error)
-    Rails.logger.error("\n=== Error Details ===")
-    Rails.logger.error("Error Class: #{error.class}")
-    Rails.logger.error("Message: #{error.message}")
-    Rails.logger.error("Backtrace:\n#{error.backtrace.join("\n")}")
-    Rails.logger.error("===================\n")
+    # Rails.logger.error("\n=== Error Details ===")
+    # Rails.logger.error("Error Class: #{error.class}")
+    # Rails.logger.error("Message: #{error.message}")
+    # Rails.logger.error("Backtrace:\n#{error.backtrace.join("\n")}")
+    # Rails.logger.error("===================\n")
 
     if Rails.env.development? || Rails.env.test?
       render json: { 
