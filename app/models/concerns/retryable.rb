@@ -12,7 +12,7 @@ module Retryable
   end
 
   def retry_with_exponential_backoff(error_classes:, context: nil)
-    retries = 0
+    @retries ||= 0
     max_retries = self.class.instance_variable_get(:@retry_config)&.fetch(:max_retries, DEFAULT_MAX_RETRIES)
     initial_wait = self.class.instance_variable_get(:@retry_config)&.fetch(:initial_wait, DEFAULT_INITIAL_WAIT)
     logger = self.class.instance_variable_get(:@retry_config)&.fetch(:logger, Rails.logger)
@@ -20,10 +20,10 @@ module Retryable
     begin
       yield
     rescue *error_classes => e
-      if retries < max_retries
-        retries += 1
-        wait_time = initial_wait * (2 ** (retries - 1)) # exponential backoff
-        logger.warn("#{context || 'Operation'} failed. Retry #{retries}/#{max_retries} after #{wait_time}s. Error: #{e.message}")
+      if @retries < max_retries
+        @retries += 1
+        wait_time = initial_wait * (2 ** (@retries - 1)) # exponential backoff
+        logger.warn("#{context || 'Operation'} failed. Retry #{@retries}/#{max_retries} after #{wait_time}s. Error: #{e.message}")
         sleep(wait_time)
         retry
       else
