@@ -1,8 +1,13 @@
 class ApplicationController < ActionController::API
   before_action :authenticate!
+  before_action :set_default_format
   rescue_from StandardError, with: :handle_error
 
   private
+
+  def set_default_format
+    request.format = :json
+  end
 
   def authenticate!
     token = request.headers['Authorization']&.split&.last
