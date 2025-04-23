@@ -5,6 +5,5 @@ Rails.application.routes.draw do
     end
     resource :sessions, only: [:create]
     
-    
   end
 end
