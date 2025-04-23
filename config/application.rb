@@ -30,6 +30,9 @@ module GameBackendApi
 
     # Add services directory to autoload paths
     config.autoload_paths << Rails.root.join('app', 'services')
+    
+    # Add lib directory to autoload paths
+    config.autoload_paths << Rails.root.join('app', 'lib')
 
     # Configuration for the application, engines, and railties goes here.
     #
