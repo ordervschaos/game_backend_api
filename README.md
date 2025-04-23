@@ -22,7 +22,7 @@ The philosophy of this Backend server is to be be a reliable, and clear to clien
 - If user is not found, we return a non blocking status so that user can view rest of the details
 - If the service is failing temporarily we retry with exponential back off
 
-Note: I've sprewn the code with notes. Search for "Note:" to find them all.
+Note: I've strewn the code with notes. Search for "Note:" to find them all.
 
 
 ## Setup Instructions
@@ -73,3 +73,13 @@ bundle exec rspec
 # Run tests with documentation format
 bundle exec rspec --format documentation
 ```
+
+### API Docs
+[API Documentation](API_DOCUMENTATION.md)
+
+
+### Debugging support
+- Use `rake spec:watch` to run specs with error logs
+- Uncomment logs in `handle_error` in `application_controller` to log standard errors
+
+

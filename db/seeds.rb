@@ -10,8 +10,11 @@
 
 # Create sample users
 users_data = [
-  { email: 'admin@example.com', password: 'admin123' },
-  { email: 'user1@example.com', password: 'user1234' },
+  { email: 'admin@example.com', password: 'Admin123!' },
+  { email: 'user1@example.com', password: 'User1234!' },
+  { email: 'player2@example.com', password: 'Player123!' },
+  { email: 'gamer3@example.com', password: 'Gamer123!' },
+  { email: 'test@example.com', password: 'Test1234!' }
 ]
 
 users_data.each do |user_data|
@@ -21,3 +24,19 @@ users_data.each do |user_data|
 end
 
 puts "Created #{User.count} users"
+
+# Create sample game events
+game_names = ['Minecraft', 'Fortnite', 'League of Legends', 'Valorant', 'Apex Legends']
+users = User.all
+
+# Create 20 random game events
+20.times do
+  GameEvent.create!(
+    user: users.sample,
+    game_name: game_names.sample,
+    event_type: 'completed',
+    occurred_at: rand(1..30).days.ago
+  )
+end
+
+puts "Created #{GameEvent.count} game events"
