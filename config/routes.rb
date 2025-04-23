@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :game_events, only: :create
     end
 
-    # Note: this endpoint is rate limited to 10 requests per minute
+    # Note: this endpoint is rate limited to 5 requests per minute per email
     resource :sessions, only: [:create]    
   end
 end

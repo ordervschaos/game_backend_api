@@ -20,7 +20,9 @@ class SubscriptionLookUp
       response = make_request @user_id
       
       if response.status == 404
+        # Note: If every user is supposed to have a subscription status, we want to flag this as an error so that we can investigate
         Rails.logger.error("Subscription lookup for user #{@user_id} returned 404")
+
         # Note: Not raising an error here because we don't want to block the user from accessing other details
         return 'no_subscription'
       end
