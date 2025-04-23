@@ -11,7 +11,8 @@ class Api::UsersController < ApplicationController
     user = User.new(format_user)
 
     if user.save
-      render json: user.slice(:email,:id), status: :created
+      # Note: sending the token to the client here because this would make the user able to login immediately after signing up
+      render json: {token: user.jwt}, status: :created
 
     else
       render json: {errors: user.errors.full_messages}, status: :unprocessable_entity

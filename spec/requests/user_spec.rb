@@ -15,6 +15,9 @@ RSpec.describe "Users", type: :request do
           post("/api/user",params: valid_values)
       }.to change(User,:count).by(1)
 
+      expect(response).to have_http_status :created
+      expect(response.body).to include("token")
+
         
       end
     end
