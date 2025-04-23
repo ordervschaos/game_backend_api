@@ -110,8 +110,6 @@ Record a game completion event.
     "game_name": "Game Name",
     "event_type": "COMPLETED",
     "occurred_at": "2024-04-22T18:30:00Z",
-    "created_at": "2024-04-22T18:30:00Z",
-    "updated_at": "2024-04-22T18:30:00Z"
   }
 }
 ```
@@ -134,7 +132,7 @@ When request validation fails:
 {
   "errors": [
     {
-      "detail": "Error message"
+      "detail": "Error message with details on the validation error"
     }
   ]
 }

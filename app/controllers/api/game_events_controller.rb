@@ -6,7 +6,7 @@ class Api::GameEventsController < ApplicationController
       game_event.user = @current_user
       
       if game_event.save
-        render json: { message: 'Game event created successfully', game_event: game_event }, status: :created
+        render json: { message: 'Game event created successfully', game_event: game_event.as_json(only: [:id, :game_name, :event_type, :occurred_at]) }, status: :created
       else
         render_error(game_event.errors.full_messages, :unprocessable_entity)
       end
