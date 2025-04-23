@@ -8,10 +8,12 @@ class Api::GameEventsController < ApplicationController
       if game_event.save
         render json: { message: 'Game event created successfully', game_event: game_event }, status: :created
       else
-        render_error(game_event.errors.full_messages)
+        render_error(game_event.errors.full_messages, :unprocessable_entity)
       end
-    rescue ActionController::UnpermittedParameters, ActionController::ParameterMissing, ArgumentError => e
-      render_error(e)
+    rescue ArgumentError => e
+      render_error(e.message, :unprocessable_entity)
+    rescue StandardError => e
+      render_error("An unexpected error occurred: #{e.message}", :bad_request)
     end
   end
 

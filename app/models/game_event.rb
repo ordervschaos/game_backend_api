@@ -1,5 +1,5 @@
 class GameEvent < ApplicationRecord
-  enum :event_type, {completed:'COMPLETED'}
+  enum :event_type, { completed: 'COMPLETED' }
 
   validates :game_name, presence: true
   validates :event_type, presence: true
