@@ -8,10 +8,10 @@ class Api::GameEventsController < ApplicationController
       if game_event.save
         render json: { message: 'Game event created successfully', game_event: game_event }, status: :created
       else
-        render json: { errors: game_event.errors.full_messages }, status: :unprocessable_entity
+        render_error(game_event.errors.full_messages)
       end
     rescue ActionController::UnpermittedParameters, ActionController::ParameterMissing, ArgumentError => e
-      render json:{errors: e}, status: :unprocessable_entity
+      render_error(e)
     end
   end
 

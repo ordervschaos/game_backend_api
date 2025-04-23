@@ -21,6 +21,10 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def render_error(errors, status = :unprocessable_entity)
+    render json: ErrorSerializer.serialize(errors), status: status
+  end
+
   def handle_error(error)
     # Rails.logger.error("\n=== Error Details ===")
     # Rails.logger.error("Error Class: #{error.class}")

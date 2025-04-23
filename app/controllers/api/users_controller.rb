@@ -15,7 +15,7 @@ class Api::UsersController < ApplicationController
       render json: {token: user.jwt}, status: :created
 
     else
-      render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
+      render_error(user.errors.full_messages)
     end
   end
 
