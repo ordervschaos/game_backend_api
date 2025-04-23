@@ -2,10 +2,8 @@ class Api::UsersController < ApplicationController
   skip_before_action :authenticate!, only: :create
 
   def show
-    user = @current_user.as_json(only: [:email, :id])
-    user[:stats] = { total_games_played: @current_user.game_events.count}
-    user[:subscription_status] = SubscriptionLookUp.call(@current_user[:id])
-    render json: user, status: :ok
+    # Note: using a presenter here to keep the controller thin
+    render json: UserPresenter.new(@current_user).as_json, status: :ok
   end
   def create
     user = User.new(format_user)
