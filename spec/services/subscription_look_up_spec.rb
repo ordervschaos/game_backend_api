@@ -21,7 +21,7 @@ RSpec.describe SubscriptionLookUp do
       end
     end
 
-    context 'with user ID 5 (intermittent failures)' do
+    context 'with user ID 5 (intermittent failures) this might take a while' do
       let(:service) { described_class.new(5) }
 
       it 'handles intermittent failures and eventually succeeds' do
